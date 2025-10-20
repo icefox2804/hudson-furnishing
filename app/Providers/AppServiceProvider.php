@@ -47,6 +47,12 @@ class AppServiceProvider extends ServiceProvider
             return SiteSetting::pluck('value', 'key')->toArray();
         }));
 
+        // Share sections with header component
+        View::composer('components.header', function ($view) {
+            $view->with('sections', \App\Models\Section::all());
+        });
+        
+        // set locale cho carbon
         Carbon::setLocale('vi');
 
     }

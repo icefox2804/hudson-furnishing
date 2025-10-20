@@ -17,15 +17,15 @@ class ResetPasswordController extends Controller
 
     public function reset(Request $request){
         $request->validate([
-            'token' => 'required',
-            'email' => 'required|email|exists:users,email',
+            'token'    => 'required',
+            'email'    => 'required|email|exists:users,email',
             'password' => 'required|min:8|confirmed',
         ], [
-            'email.required' => 'Vui lòng nhập email của bạn.',
-            'email.email' => 'Địa chỉ email không hợp lệ.',
-            'email.exists' => 'Email không tồn tại trong hệ thống.',
-            'password.required' => 'Vui lòng nhập mật khẩu mới.',
-            'password.min' => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
+            'email.required'     => 'Vui lòng nhập email của bạn.',
+            'email.email'        => 'Địa chỉ email không hợp lệ.',
+            'email.exists'       => 'Email không tồn tại trong hệ thống.',
+            'password.required'  => 'Vui lòng nhập mật khẩu mới.',
+            'password.min'       => 'Mật khẩu mới phải có ít nhất 8 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu mới không khớp.',
         ]);
 
@@ -39,10 +39,10 @@ class ResetPasswordController extends Controller
         );
 
         $message = match ($status) {
-            Password::PASSWORD_RESET => 'Mật khẩu của bạn đã được đặt lại thành công!',
+            Password::PASSWORD_RESET  => 'Mật khẩu của bạn đã được đặt lại thành công!',
             Password::RESET_LINK_SENT => 'Chúng tôi đã gửi email khôi phục mật khẩu cho bạn!',
-            Password::INVALID_TOKEN => 'Mã đặt lại mật khẩu không hợp lệ.',
-            Password::INVALID_USER => 'Không tìm thấy người dùng với email này.',
+            Password::INVALID_TOKEN   => 'Mã đặt lại mật khẩu không hợp lệ.',
+            Password::INVALID_USER    => 'Không tìm thấy người dùng với email này.',
             Password::RESET_THROTTLED => 'Vui lòng chờ trước khi thử lại.', 
             default => 'Vui lòng chờ trước khi thử lại.',
         };

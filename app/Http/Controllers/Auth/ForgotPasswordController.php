@@ -19,8 +19,8 @@ class ForgotPasswordController extends Controller
             'email' => 'required|email|exists:users,email',
         ], [
             'email.required' => 'Vui lòng nhập email của bạn.',
-            'email.email' => 'Địa chỉ email không hợp lệ.',
-            'email.exists' => 'Email không tồn tại trong hệ thống.',
+            'email.email'    => 'Địa chỉ email không hợp lệ.',
+            'email.exists'   => 'Email không tồn tại trong hệ thống.',
         ]);
 
         $user = User::where('email', $request->email)->first();

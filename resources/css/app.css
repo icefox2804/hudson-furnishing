@@ -1349,23 +1349,39 @@ herosection
     image-rendering: -webkit-optimize-contrast;
 }
 
-/* Back to top button visual fixes */
+/* Back to top button */
 .btn-back-to-top {
-    width: 50px;
-    height: 50px;
-    display: inline-flex;
+    display: none; /* ẩn mặc định */
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background: linear-gradient(180deg, #3b6b75, #2f525a);
     color: #fff;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 9999;
+
+    border: none; /* loại bỏ viền mặc định */
+    outline: none; /* loại bỏ viền khi focus */
+    cursor: pointer;
 }
+
+.btn-back-to-top.show {
+    display: flex;
+}
+
 .btn-back-to-top i {
     font-size: 18px;
     line-height: 1;
 }
 
+/* Bounce animation */
 @keyframes backToTopBounceIn {
     0% {
         transform: translateY(10px);
@@ -1464,4 +1480,100 @@ html body div.card div.card-body h6.card-title.product-name-home a:focus {
 .offers-table th:nth-child(7),
 .offers-table td:nth-child(7) {
     width: 19% !important;
+}
+
+/*floating chat*/
+/* Vị trí floating chat */
+.chat-float {
+    position: fixed;
+    bottom: 100px;
+    right: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    z-index: 9999;
+}
+
+/* Nút chính */
+.chat-main-btn {
+    background-color: var(--primary-color);
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s ease;
+    position: relative;
+}
+
+/* Hover cho nút chính (giống style social-link hover) */
+.chat-main-btn:hover {
+    transform: rotate(15deg) scale(1.1);
+    background-color: var(--secondary-color);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Nút con */
+.chat-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    color: var(--primary-color);
+    font-size: 1.3rem;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    opacity: 0;
+    transform: translate(0, 0) scale(0);
+    transition: all 0.35s ease;
+}
+
+/* Hover giống .social-link */
+.chat-btn:hover {
+    color: var(--secondary-color);
+    transform: scale(1.2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+}
+
+/* Khi mở menu */
+.chat-float.open .chat-btn {
+    opacity: 1;
+    transform: scale(1);
+}
+
+/* Các màu icon mặc định */
+.chat-btn.zalo {
+    color: #0068ff;
+}
+
+.chat-btn.messenger {
+    color: #00b2ff;
+}
+
+.chat-btn.phone {
+    color: #25d366;
+}
+
+/* Hiệu ứng chuyển động khi mở (góc từ 9h -> 12h) */
+.chat-float.open .chat-btn:nth-child(2) {
+    transform: translate(-70px, 40px) scale(1);
+}
+.chat-float.open .chat-btn:nth-child(3) {
+    transform: translate(-70px, -35px) scale(1);
+}
+.chat-float.open .chat-btn:nth-child(4) {
+    transform: translate(-20px, -90px) scale(1);
 }

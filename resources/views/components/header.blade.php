@@ -30,25 +30,19 @@
                         Sản Phẩm
                     </a>
                     <ul class="dropdown-menu shadow">
-                        <li><a class="dropdown-item" href="{{ route('products.index') }}">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('products.index') }}">
                             Tất Cả Sản Phẩm
-                        </a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="{{ route('products.section', 'phong-ngu') }}">
-                            Phòng Ngủ
-                        </a></li>
-                        <li><a class="dropdown-item" href="{{ route('products.section', 'phong-khach') }}">
-                            Phòng Khách
-                        </a></li>
-                        <li><a class="dropdown-item" href="{{ route('products.section', 'phong-an') }}">
-                            Phòng Ăn
-                        </a></li>
-                        <li><a class="dropdown-item" href="{{ route('products.section', 'van-phong') }}">
-                            Văn Phòng
-                        </a></li>
-                        <li><a class="dropdown-item" href="{{ route('products.section', 'ngoai-troi') }}">
-                            Ngoài Trời
-                        </a></li>
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-dividerdivider"></li>
+                        @foreach ($sections as $section)
+                        <li>
+                            <a class="dropdown-item" href="{{ route('products.section', $section->slug)}}">
+                                {{ $section->name}}
+                            </a>
+                        </li>
+                        @endforeach
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -88,6 +82,12 @@
                                 <li><a class="dropdown-item" href="{{ route('admin.dashboard') }}">
                                     <i class="fas fa-cog me-2"></i>Quản Trị
                                 </a></li>
+                                @else
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('user.dashboard') }}">
+                                        <i class="fas fa-user-circle me-2"></i>Dashboard của tôi
+                                    </a>
+                                </li>
                             @endif
                             <a class="dropdown-item" href="{{ route('password.edit') }}">
                                 <i class="fas fa-key fa-sm fa-fw mr-2 text-gray-400"></i>

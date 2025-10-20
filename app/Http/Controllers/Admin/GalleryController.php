@@ -47,9 +47,15 @@ class GalleryController extends Controller
     {
         $request->validate([
             'product_id' => 'required|exists:products,id',
-            'images' => 'required|array|max:10',
-            'images.*' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
-            'alt_text' => 'nullable|string|max:255',
+            'images'     => 'required|array|max:10',
+            'images.*'   => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'alt_text'   => 'nullable|string|max:255',
+        ], [
+            'product_id.required' => 'Vui lòng chọn sản phẩm.',
+            'product_id.exists'   => 'Sản phẩm khong ton tai.',
+            'images.required'     => 'Vui lòng chọn hình ảnh.',
+            'images.array'        => 'Vui lòng chọn nhiều hình ảnh.',
+
         ]);
 
         $uploadedImages = [];

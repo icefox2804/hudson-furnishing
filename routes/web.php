@@ -30,6 +30,11 @@ use App\Http\Controllers\Admin\VisitorStatsController;
 use App\Http\Controllers\VisitorController;
 use App\Http\Controllers\Admin\HomeProductSectionController;
 use App\Http\Controllers\Admin\TrashController;
+use App\Http\Controllers\Admin\LiveChatController;
+use App\Http\Controllers\User\UserController as UserUserController;
+use App\Http\Controllers\FavoriteController;
+use App\Http\Controllers\Admin\ChatController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -47,8 +52,8 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/about', [HomeController::class, 'about'])->name('about');
 
 // Products Routes
+Route::get('/products/{section}', [ProductController::class, 'bySection'])->name('products.section')->where('section', '[a-zA-Z0-9\-_]+');
 Route::get('/products', [ProductController::class, 'index'])->name('products.index');
-Route::get('/products/{section}', [ProductController::class, 'bySection'])->name('products.section');
 Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
 
 // Categories Routes
@@ -75,6 +80,16 @@ Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store
 
 // Visitor Stats
 Route::post('/track-visitor', [VisitorController::class, 'track'])->name('visitor.track');
+
+// User Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [UserUserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/profile', [UserUserController::class, 'profile'])->name('user.profile');
+    Route::post('/profile/update', [UserUserController::class, 'updateProfile'])->name('user.updateProfile');
+    Route::post('/profile/password', [UserUserController::class, 'updatePassword'])->name('user.updatePassword');
+    Route::get('/favorites', [UserUserController::class, 'favorites'])->name('user.favorites');    
+    Route::post('/favorites/toggle/{product:slug}', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
+});
 
 // Authentication Routes
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
@@ -243,4 +258,8 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         'update'  => 'admin.home-sections.update',
         'destroy' => 'admin.home-sections.destroy'
     ]);
+
+    Route::get('/chats', [ChatController::class, 'index'])->name('admin.chat.index');
+    Route::get('/chats/{id}', [ChatController::class, 'show'])->name('admin.chat.show');
+    Route::get('/chat/history/{sessionId}', [ChatController::class, 'history']);
 });

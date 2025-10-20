@@ -66,7 +66,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form method="POST" action="{{ route('admin.brands.destroy', $brand) }}" 
-                                          class="d-inline" onsubmit="return confirm('Are you sure?')">
+                                          class="d-inline form-confirm">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-sm btn-outline-danger">
@@ -80,9 +80,9 @@
                         <tr>
                             <td colspan="5" class="text-center py-4">
                                 <i class="fas fa-star fa-3x text-muted mb-3"></i>
-                                <p class="text-muted">No brands found</p>
+                                <p class="text-muted">Không tìm thấy thương hiệu nào</p>
                                 <a href="{{ route('admin.brands.create') }}" class="btn btn-primary">
-                                    Add Your First Brand
+                                    Thêm Thương Hiệu Đầu Tiên
                                 </a>
                             </td>
                         </tr>

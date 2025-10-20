@@ -24,14 +24,14 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'phone' => 'nullable|string|max:20',
+            'name'    => 'required|string|max:255',
+            'email'   => 'required|email|max:255',
+            'phone'   => 'nullable|string|max:20',
             'message' => 'required|string|max:1000',
         ], [
-            'name.required' => 'Vui lòng nhập họ tên.',
-            'email.required' => 'Vui lòng nhập địa chỉ email hợp lệ.',
-            'phone.required' => 'Vui lòng nhập số điện thoại.',
+            'name.required'    => 'Vui lòng nhập họ tên.',
+            'email.required'   => 'Vui lòng nhập địa chỉ email hợp lệ.',
+            'phone.required'   => 'Vui lòng nhập số điện thoại.',
             'message.required' => 'Vui lòng nhập thông điệp của bạn.',
         ]);
 

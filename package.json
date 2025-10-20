@@ -4,7 +4,8 @@
         "dev": "vite",
         "build": "vite build",
         "serve": "php artisan serve",
-        "dev-all": "concurrently \"npm run dev\" \"php artisan serve\""
+        "dev-all": "concurrently \"npm run dev\" \"php artisan serve\"",
+        "dev-all-ws": "concurrently --kill-others-on-fail \"npm run dev\" \"php artisan serve\" \"php artisan ratchet:serve\""
     },
     "devDependencies": {
         "axios": "^1.1.2",

@@ -7,124 +7,47 @@
     <div class="row">
         <!-- Sidebar Filters -->
         <div class="col-lg-3">
-            <div class="card">
-                <div class="card-header d-flex align-items-center justify-content-between">
-                    <h5>Bộ Lọc</h5>
-                    <i class="fa-solid fa-filter"></i>
-                </div>
-                <div class="card-body">
-                    <form method="GET" action="{{ route('products.index') }}">
-                        <!-- Section Filter -->
-                        <div class="mb-3">
-                            <label class="form-label">Không Gian Sử Dụng</label>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                    {{ request('section') ? $sections->firstWhere('slug', request('section'))->name : 'Tất Cả Phòng/Khu Vực' }}
-                                </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li>
-                                        <a class="dropdown-item {{ request('section') == '' ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except('section', 'page'), ['section' => ''])) }}">
-                                            Tất Cả Không Gian
-                                        </a>
-                                    </li>
-                                    @foreach($sections as $section)
-                                    <li>
-                                        <a class="dropdown-item {{ request('section') == $section->slug ? 'active' : '' }}"
-                                        href="{{ route('products.index', array_merge(request()->except('section', 'page'), ['section' => $section->slug])) }}">
-                                            {{ $section->name }}
-                                        </a>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Category Filter -->
-                        <div class="mb-3">
-                            <label class="form-label">Danh Mục</label>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                    {{ request('category') ? $categories->firstWhere('id', request('category'))->name : 'Tất Cả Danh Mục' }}
-                                </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li>
-                                        <a class="dropdown-item {{ request('category') == '' ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except('category','page'), ['category' => ''])) }}">
-                                            Tất Cả Danh Mục
-                                        </a>
-                                    </li>
-                                    @foreach($categories as $category)
-                                    <li>
-                                        <a class="dropdown-item {{ request('category') == $category->id ? 'active' : '' }}"
-                                        href="{{ route('products.index', array_merge(request()->except('category','page'), ['category' => $category->id])) }}">
-                                            {{ $category->name }}
-                                        </a>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Brand Filter -->
-                        <div class="mb-3">
-                            <label class="form-label">Thương Hiệu</label>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                    {{ request('brand') ? $brands->firstWhere('id', request('brand'))->name : 'Tất Cả Thương Hiệu' }}
-                                </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li>
-                                        <a class="dropdown-item {{ request('brand') == '' ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except('brand','page'), ['brand' => ''])) }}">
-                                            Tất Cả Thương Hiệu
-                                        </a>
-                                    </li>
-                                    @foreach($brands as $brand)
-                                    <li>
-                                        <a class="dropdown-item {{ request('brand') == $brand->id ? 'active' : '' }}"
-                                        href="{{ route('products.index', array_merge(request()->except('brand','page'), ['brand' => $brand->id])) }}">
-                                            {{ $brand->name }}
-                                        </a>
-                                    </li>
-                                    @endforeach
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!-- Price Range -->
-                        <div class="mb-3">
-                            <label class="form-label">Khoảng Giá</label>
-                            <div class="dropdown">
-                                <button class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown">
-                                    {{ request('min_price') ? request('min_price') . ' - ' . request('max_price') : 'Chọn khoảng giá' }}
-                                </button>
-                                <ul class="dropdown-menu w-100">
-                                    <li>
-                                        <a class="dropdown-item {{ !request('min_price') ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except(['min_price','max_price','page']))) }}">
-                                            Tất cả
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item {{ request('min_price') == 0 && request('max_price') == 1000000 ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except(['min_price','max_price','page']), ['min_price'=>0,'max_price'=>1000000])) }}">
-                                            0 - 1,000,000
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item {{ request('min_price') == 1000000 && request('max_price') == 5000000 ? 'active' : '' }}" href="{{ route('products.index', array_merge(request()->except(['min_price','max_price','page']), ['min_price'=>1000000,'max_price'=>5000000])) }}">
-                                            1,000,000 - 5,000,000
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-
-                        <!--Reset Bộ Lộc-->
-                        <hr>
-                        <div class="d-flex gap-2 justify-content-center align-items-center mt-4">                            
-                            <a href="{{ route('products.index') }}" class="btn btn-primary flex-fill">Reset Bộ Lọc</a>
-                        </div>
-
-                    </form>
-                </div>
-            </div>
+            <x-standalone-filter :formAction="route('products.index')" :columns="1" :filterConfig="[
+                    'filters' => [
+                        [
+                            'type' => 'text',
+                            'name' => 'search',
+                            'placeholder' => 'Tìm tên sản phẩm...',
+                            'label' => 'Tìm kiếm',
+                        ],
+                        [
+                            'type' => 'select',
+                            'name' => 'section',
+                            'placeholder' => 'Tất cả không gian',
+                            'label' => 'Không gian',
+                            'options' => $sections->pluck('name', 'slug')->toArray(),
+                        ],
+                        [
+                            'type' => 'select',
+                            'name' => 'material',
+                            'placeholder' => 'Tất cả chất liệu',
+                            'label' => 'Chất liệu',
+                            'options' => $materials->pluck('name', 'id')->toArray(),
+                            ],
+                        [
+                            'type' => 'select',
+                            'name' => 'category',
+                            'placeholder' => 'Tất cả danh mục',
+                            'label' => 'Danh mục',
+                            'options' => $categories->pluck('name', 'id')->toArray(),
+                        ],
+                        [
+                            'type' => 'select',
+                            'name' => 'brand',
+                            'placeholder' => 'Tất cả thương hiệu',
+                            'label' => 'Thương hiệu',
+                            'options' => $brands->pluck('name', 'id')->toArray(),
+                        ],
+                        ['type' => 'price_range', 'name' => 'price_range', 'label' => 'Khoảng giá'],
+                        ['type' => 'stock_range', 'name' => 'stock_range', 'label' => 'Số lượng sản phẩm'],
+                        
+                    ],
+                ]" />
         </div>
 
         <!-- product list -->

@@ -305,34 +305,28 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Back to Top Button
 document.addEventListener("DOMContentLoaded", function () {
+    // Tạo nút
     const backToTopButton = document.createElement("button");
     backToTopButton.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    backToTopButton.className =
-        "btn btn-primary btn-back-to-top position-fixed rounded-circle shadow-lg d-flex align-items-center justify-content-center";
-    backToTopButton.style.cssText =
-        "bottom: 20px; right: 20px; z-index: 1000; display: none; width: 50px; height: 50px;";
+    backToTopButton.className = "btn-back-to-top";
     backToTopButton.setAttribute("aria-label", "Back to top");
-
     document.body.appendChild(backToTopButton);
 
+    // Hàm ẩn/hiện nút
     function toggleBackToTop() {
-        if (window.pageYOffset > 300) {
-            backToTopButton.style.display = "block";
-            backToTopButton.classList.add("bounce-in");
+        if (window.scrollY > 300) {
+            backToTopButton.classList.add("show", "bounce-in");
         } else {
-            backToTopButton.style.display = "none";
-            backToTopButton.classList.remove("bounce-in");
+            backToTopButton.classList.remove("show", "bounce-in");
         }
     }
 
     window.addEventListener("scroll", toggleBackToTop);
-    toggleBackToTop(); // 👈 kiểm tra trạng thái ngay khi trang vừa load
+    toggleBackToTop(); // kiểm tra khi load trang
 
+    // Click scroll lên đầu trang
     backToTopButton.addEventListener("click", function () {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth",
-        });
+        window.scrollTo({ top: 0, behavior: "smooth" });
     });
 });
 

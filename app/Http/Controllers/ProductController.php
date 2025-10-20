@@ -50,19 +50,34 @@ class ProductController extends Controller
         }
 
         // Filter by price range
-        if ($request->has('min_price') && $request->min_price) {
-            $query->where('price', '>=', $request->min_price);
+        if ($request->has('price_range') && $request->price_range) {
+            $priceRange = explode('-', $request->price_range);
+            if (count($priceRange) == 2) {
+                $query->whereBetween('price', [$priceRange[0], $priceRange[1]]);
+            }
         }
-        if ($request->has('max_price') && $request->max_price) {
-            $query->where('price', '<=', $request->max_price);
+
+        // Filter by stock range  
+        if ($request->has('stock_range') && $request->stock_range) {
+            $stockRange = explode('-', $request->stock_range);
+            if (count($stockRange) == 2) {
+                $query->whereBetween('stock', [$stockRange[0], $stockRange[1]]);
+            }
         }
+
+        // Filter by status
+        if ($request->has('status') && $request->status) {
+            $query->where('status', $request->status);
+        }
+
+        
 
         // Search by name
         if ($request->has('search') && $request->search) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
-        // Sort options
+        // sắp xếp sản phẩm
         $sortBy = $request->get('sort_by', 'name');
         $sortOrder = $request->get('sort_order', 'asc');
         
@@ -96,13 +111,18 @@ class ProductController extends Controller
      */
     public function bySection($sectionSlug, Request $request)
 {
-    $section = Section::where('slug', $sectionSlug)->firstOrFail();
+    try {
+        $section = Section::where('slug', $sectionSlug)->firstOrFail();
+    } catch (\Exception $e) {
+        abort(404, 'Section not found: ' . $sectionSlug);
+    }
 
     $query = Product::with(['section', 'category', 'brand', 'material', 'images', 'reviews'])
         ->whereHas('section', function($q) use ($sectionSlug) {
             $q->where('slug', $sectionSlug);
         })
         ->where('status', 'active');
+       
 
     // Filter by category
     if ($request->has('category') && $request->category) {
@@ -125,6 +145,50 @@ class ProductController extends Controller
     }
     if ($request->has('max_price') && $request->max_price) {
         $query->where('price', '<=', $request->max_price);
+    }
+
+    // Filter by price range
+    if ($request->has('price_range') && $request->price_range) {
+        $priceRange = explode('-', $request->price_range);
+        if (count($priceRange) == 2) {
+            $query->whereBetween('price', [$priceRange[0], $priceRange[1]]);
+        }
+    }
+
+    // Filter by stock range  
+    if ($request->has('stock_range') && $request->stock_range) {
+        $stockRange = explode('-', $request->stock_range);
+        if (count($stockRange) == 2) {
+            $query->whereBetween('stock', [$stockRange[0], $stockRange[1]]);
+        }
+    }
+
+    // Filter by status
+    if ($request->has('status') && $request->status) {
+        $query->where('status', $request->status);
+    }
+
+    // Search by name
+    if ($request->has('search') && $request->search) {
+        $query->where('name', 'like', '%' . $request->search . '%');
+    }
+
+    // sắp xếp sản phẩm 
+    $sortBy = $request->get('sort_by', 'name');
+    $sortOrder = $request->get('sort_order', 'asc');
+    
+    switch ($sortBy) {
+        case 'price':
+            $query->orderBy('price', $sortOrder);
+            break;
+        case 'name':
+            $query->orderBy('name', $sortOrder);
+            break;
+        case 'created_at':
+            $query->orderBy('created_at', $sortOrder);
+            break;
+        default:
+            $query->orderBy('name', 'asc');
     }
 
     $products = $query->paginate(12);

@@ -102,7 +102,6 @@
                             placeholder="Nhập giá bán"
                             class="@error('price') is-invalid @enderror"
                             id="price"
-                            required
                         />
                         @error('price')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -131,7 +130,6 @@
                             placeholder="Nhập số lượng"
                             class="@error('stock') is-invalid @enderror"
                             id="stock"
-                            required
                         />
                         @error('stock')
                             <div class="invalid-feedback">{{ $message }}</div>
@@ -184,7 +182,7 @@
                     name="images"
                     label="Ảnh Đại Diện Sản Phẩm"
                     :multiple="true"
-                    :required="true"
+                    :required="false"
                     :maxFiles="5"
                     acceptedTypes="image/*"
                     maxSize="2MB"

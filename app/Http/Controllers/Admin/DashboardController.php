@@ -22,20 +22,20 @@ class DashboardController extends Controller
     public function index()
     {
         $stats = [
-            'total_products' => Product::count(),
-            'active_products' => Product::where('status', 'active')->count(),
+            'total_products'    => Product::count(),
+            'active_products'   => Product::where('status', 'active')->count(),
             'featured_products' => Product::where('featured', true)->count(),
-            'total_categories' => Category::count(),
-            'total_brands' => Brand::count(),
-            'total_materials' => Material::count(),
-            'active_offers' => Offer::where('status', 'active')->count(),
-            'total_reviews' => Review::count(),
-            'pending_reviews' => Review::where('approved', false)->count(),
-            'total_contacts' => Contact::count(),
-            'new_contacts' => Contact::where('status', 'new')->count(),
-            'total_visitors' => VisitorStat::sum('total_visits'),
-            'unique_visitors' => VisitorStat::sum('unique_visits'),
-            'total_users' => User::count(), // ✅ thêm dòng này
+            'total_categories'  => Category::count(),
+            'total_brands'      => Brand::count(),
+            'total_materials'   => Material::count(),
+            'active_offers'     => Offer::where('status', 'active')->count(),
+            'total_reviews'     => Review::count(),
+            'pending_reviews'   => Review::where('approved', false)->count(),
+            'total_contacts'    => Contact::count(),
+            'new_contacts'      => Contact::where('status', 'new')->count(),
+            'total_visitors'    => VisitorStat::sum('total_visits'),
+            'unique_visitors'   => VisitorStat::sum('unique_visits'),
+            'total_users'       => User::count(), // ✅ thêm dòng này
         ];
 
         // Recent activities
@@ -59,7 +59,7 @@ class DashboardController extends Controller
             ->get()
             ->reverse();
 
-        $recentUsers = User::with('role') // <- thêm with('role') để load quan hệ role
+        $recentUsers = User::with('role'    ) // <- thêm with('role') để load quan hệ role
                     ->latest()
                     ->take(5)
                     ->get();

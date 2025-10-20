@@ -51,11 +51,11 @@ class TrashController extends Controller
     {
         $request->validate([
             'model' => 'required|string',
-            'id' => 'required|integer'
+            'id'    => 'required|integer'
         ],[
             'model.required' => 'Vui lòng chọn Model',
-            'id.required' => 'Vui lòng chọn Dữ liệu',
-            'id.integer' => 'Dữ liệu khóng hợp lệ',
+            'id.required'    => 'Vui lòng chọn Dữ liệu',
+            'id.integer'     => 'Dữ liệu khóng hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -79,11 +79,11 @@ class TrashController extends Controller
     {
         $request->validate([
             'model' => 'required|string',
-            'id' => 'required|integer'
+            'id'    => 'required|integer'
         ],[
             'model.required' => 'Vui lòng chọn Model',
-            'id.required' => 'Vui lòng chọn Dữ liệu',
-            'id.integer' => 'Dữ liệu khóng hợp lệ',
+            'id.required'    => 'Vui lòng chọn Dữ liệu',
+            'id.integer'     => 'Dữ liệu khóng hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -107,12 +107,12 @@ class TrashController extends Controller
     {
         $request->validate([
             'model' => 'required|string',
-            'ids' => 'required|array',
+            'ids'   => 'required|array',
             'ids.*' => 'integer'
         ],[
             'model.required' => 'Vui lòng chọn Model',
-            'ids.required' => 'Vui lòng chọn Dữ liệu',
-            'ids.*.integer' => 'Dữ liệu khóng hợp lệ',
+            'ids.required'   => 'Vui lòng chọn Dữ liệu',
+            'ids.*.integer'  => 'Dữ liệu khóng hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();
@@ -134,12 +134,12 @@ class TrashController extends Controller
     {
         $request->validate([
             'model' => 'required|string',
-            'ids' => 'required|array',
+            'ids'   => 'required|array',
             'ids.*' => 'integer'
         ],[
             'model.required' => 'Vui lòng chọn Model',
-            'ids.required' => 'Vui lòng chọn dữ liệu',
-            'ids.*.integer' => 'Dữ liệu không hợp lệ',
+            'ids.required'   => 'Vui lòng chọn dữ liệu',
+            'ids.*.integer'  => 'Dữ liệu không hợp lệ',
         ]);
         
         $models = SoftDeleteService::getSoftDeleteModels();

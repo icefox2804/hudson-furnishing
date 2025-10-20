@@ -5,10 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
 use Illuminate\Support\Facades\Storage;
-
 
 class BrandController extends Controller
 {
@@ -17,12 +14,12 @@ class BrandController extends Controller
         $query = Brand::withCount('products');
 
         // Search by name
-        if ($request->has('search') && $request->search != '') {
+        if ($request->filled('search')) {
             $query->where('name', 'like', '%' . $request->search . '%');
         }
 
         // Filter by product count
-        if ($request->has('product_count') && $request->product_count != '') {
+        if ($request->filled('product_count')) {
             switch ($request->product_count) {
                 case '0':
                     $query->having('products_count', '=', 0);
@@ -40,15 +37,13 @@ class BrandController extends Controller
         }
 
         // Filter by creation date
-        if ($request->has('created_from') && $request->created_from != '') {
+        if ($request->filled('created_from')) {
             $query->whereDate('created_at', '>=', $request->created_from);
         }
 
-        // Sort by creation date
         $query->orderBy('created_at', 'desc');
-
         $brands = $query->paginate(15)->withQueryString();
-        
+
         return view('admin.brands.index', compact('brands'));
     }
 
@@ -64,35 +59,33 @@ class BrandController extends Controller
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'Tên thương hiệu không được để trống.',
-            'name.unique' => 'Tên thương hiệu đã tồn tại.',
-            'logo.image' => 'File tải lên phải là hình ảnh.',
-            'logo.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
-            'logo.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+            'name.unique'   => 'Tên thương hiệu đã tồn tại.',
+            'logo.image'    => 'File tải lên phải là hình ảnh.',
+            'logo.mimes'    => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'logo.max'      => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
         $brand = Brand::create([
         'name' => $request->name,
-        'slug' => Str::slug($request->name),
+        'slug' => \Illuminate\Support\Str::slug($request->name),
     ]);
 
-    // Nếu có file logo thì lưu
-    if ($request->hasFile('logo')) {
-        $file = $request->file('logo');
-        $filename = 'brands/' . $brand->id . '-' . time() . '.' . $file->getClientOriginalExtension();
-        $file->storeAs('public', $filename);
 
-        $brand->logo = $filename;
-        $brand->save();
-    }
+        if ($request->hasFile('logo')) {
+            $file = $request->file('logo');
+            $filename = 'brands/' . $brand->id . '-' . time() . '.' . $file->getClientOriginalExtension();
+            $file->storeAs('public', $filename);
 
-        return redirect()->route('admin.brands.index')->with('success', 'Brand created successfully!');
+            $brand->logo = $filename;
+            $brand->save();
+        }
+
+        return redirect()->route('admin.brands.index')->with('success', 'Thêm thương hiệu mới thành công!');
     }
 
     public function show(Brand $brand)
     {
-
         $products = $brand->products()->with(['section', 'category', 'brand', 'material', 'images'])->paginate(12);
-        
         return view('admin.brands.show', compact('brand', 'products'));
     }
 
@@ -105,27 +98,23 @@ class BrandController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:brands,name,' . $brand->id,
-            'description' => 'nullable|string|max:1000',
             'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'Tên thương hiệu không được để trống.',
-            'name.unique' => 'Tên thương hiệu đã tồn tại.',
-            'logo.image' => 'File tải lên phải là hình ảnh.',
-            'logo.mimes' => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
-            'logo.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+            'name.unique'   => 'Tên thương hiệu đã tồn tại.',
+            'logo.image'    => 'File tải lên phải là hình ảnh.',
+            'logo.mimes'    => 'Hình ảnh phải có định dạng: jpeg, png, jpg, gif.',
+            'logo.max'      => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
-        // Cập nhật các trường cơ bản
         $brand->name = $request->name;
-        $brand->slug = Str::slug($request->name);
 
-        // Nếu có file logo mới thì lưu và cập nhật
         if ($request->hasFile('logo')) {
             $file = $request->file('logo');
             $filename = 'brands/' . $brand->id . '-' . time() . '.' . $file->getClientOriginalExtension();
             $file->storeAs('public', $filename);
 
-            // Xóa file logo cũ nếu có
+            // Xóa logo cũ nếu có
             if ($brand->logo && Storage::disk('public')->exists($brand->logo)) {
                 Storage::disk('public')->delete($brand->logo);
             }
@@ -135,17 +124,16 @@ class BrandController extends Controller
 
         $brand->save();
 
-        return redirect()->route('admin.brands.index')->with('success', 'Brand updated successfully!');
+        return redirect()->route('admin.brands.index')->with('success', 'Cập nhật thương hiệu thành công!');
     }
-
 
     public function destroy(Brand $brand)
     {
         if ($brand->products()->count() > 0) {
-            return redirect()->route('admin.brands.index')->with('error', 'Cannot delete brand with existing products!');
+            return redirect()->route('admin.brands.index')->with('error', 'Không thể xóa thương hiệu có sản phẩm liên quan!');
         }
 
         $brand->delete();
-        return redirect()->route('admin.brands.index')->with('success', 'Brand deleted successfully!');
+        return redirect()->route('admin.brands.index')->with('success', 'Thương hiệu đã được xóa thành công!');
     }
 }

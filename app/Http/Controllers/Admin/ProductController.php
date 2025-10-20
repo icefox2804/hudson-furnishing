@@ -217,7 +217,7 @@ class ProductController extends Controller
             'slug'        => $slug,
             'featured'    => $request->boolean('featured'),
             'status'      => $request->status,
-        ]);
+        ],);
 
         // Upload hình ảnh
         if ($request->hasFile('images')) {
@@ -278,22 +278,22 @@ class ProductController extends Controller
             $data['status'] = 'inactive';
         }
 
-        $request->merge($data);
+        $request->merge($data);     
 
         $request->validate([
-            'name'        => 'required|string|max:75',
-            'description' => 'required|string',
+            'name'              => 'required|string|max:75',
+            'description'       => 'required|string',
             'full_description'  => 'nullable|string', // mới thêm
-            'section_id'  => 'required|exists:sections,id',
-            'category_id' => 'required|exists:categories,id',
-            'brand_id'    => 'required|exists:brands,id',
-            'material_id' => 'required|exists:materials,id',
-            'price'       => 'required|numeric|min:1|max:1000000000',
-            'sale_price'  => 'nullable|numeric|min:1|max:1000000000|lt:price',
-            'stock'       => 'required|integer|min:0',
-            'featured'    => 'boolean',
-            'status'      => 'required|in:active,inactive',
-            'images.*'    => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'section_id'        => 'required|exists:sections,id',
+            'category_id'       => 'required|exists:categories,id',
+            'brand_id'          => 'required|exists:brands,id',
+            'material_id'       => 'required|exists:materials,id',
+            'price'             => 'required|numeric|min:1|max:1000000000',
+            'sale_price'        => 'nullable|numeric|min:1|max:1000000000|lt:price',
+            'stock'             => 'required|integer|min:0',
+            'featured'          => 'boolean',
+            'status'            => 'required|in:active,inactive',
+            'images.*'          => 'image|mimes:jpeg,png,jpg,gif|max:2048',
         ],[
             'name.required'        => 'Vui lòng nhập tên sản phẩm',
             'description.required' => 'Vui lòng nhập mô tả ngắn',
@@ -319,19 +319,19 @@ class ProductController extends Controller
         }
 
         $product->update([
-            'name'        => $request->name,
-            'description' => $request->description,
+            'name'              => $request->name,
+            'description'       => $request->description,
             'full_description'  => $request->full_description, // mới thêm
-            'section_id'  => $request->section_id,
-            'category_id' => $request->category_id,
-            'brand_id'    => $request->brand_id,
-            'material_id' => $request->material_id,
-            'price'       => $request->price,
-            'sale_price'  => $request->sale_price,
-            'stock'       => $request->stock,
-            'slug'        => $slug,
-            'featured'    => $request->boolean('featured'),
-            'status'      => $request->status,
+            'section_id'        => $request->section_id,
+            'category_id'       => $request->category_id,
+            'brand_id'          => $request->brand_id,
+            'material_id'       => $request->material_id,
+            'price'             => $request->price,
+            'sale_price'        => $request->sale_price,
+            'stock'             => $request->stock,
+            'slug'              => $slug,
+            'featured'          => $request->boolean('featured'),
+            'status'            => $request->status,
         ]);
 
         // Upload hình ảnh mới (nếu có)
@@ -387,8 +387,8 @@ class ProductController extends Controller
 
             ProductImage::create([
                 'product_id' => $product->id,
-                'url' => $filename,
-                'alt_text' => $product->name . ' - Image ' . ($existingImagesCount + $index + 1),
+                'url'        => $filename,
+                'alt_text'   => $product->name . ' - Image ' . ($existingImagesCount + $index + 1),
                 'is_primary' => $index === 0,
                 'sort_order' => $existingImagesCount + $index + 1,
             ]);

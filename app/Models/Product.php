@@ -95,4 +95,13 @@ class Product extends Model
     {
         return 'slug';
     }
+
+
+    // Get the users that favorited the product
+    public function favoredByUsers()
+    {
+        return $this->belongsToMany(User::class, 'favorites', 'product_id', 'user_id')
+                    ->withTimestamps();
+    }
+
 }

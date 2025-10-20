@@ -17,7 +17,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     
     <!-- Custom CSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/floatingchat.js'])
     
     @stack('styles')
 </head>
@@ -32,6 +32,26 @@
 
     <!-- Footer -->
     @include('components.footer')
+
+    <!-- Floating Chat Buttons -->
+<div class="chat-float" id="chatFloat">
+    <button class="chat-main-btn" id="chatMainBtn">
+        <i class="fa-regular fa-comment"></i>
+    </button>
+
+    <a href="{{ $siteSettings['chat_zalo_url'] ?? 'https://zalo.me/' }}" target="_blank" class="chat-btn zalo-btn">
+        <i class="fa-brands fa-zalo"></i>Zalo 
+    </a>
+
+    <a href="{{ $siteSettings['chat_messenger_url'] ?? 'https://m.me/' }}" target="_blank" class="chat-btn messenger-btn">
+        <i class="fa-brands fa-facebook-messenger"></i>
+    </a>
+
+    <a href="tel:{{ $siteSettings['chat_phone_number'] ?? '0123456789' }}" class="chat-btn phone-btn">
+        <i class="fa-solid fa-phone"></i>
+    </a>
+</div>
+
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

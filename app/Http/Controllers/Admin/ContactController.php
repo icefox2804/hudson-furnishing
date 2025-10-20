@@ -52,12 +52,15 @@ class ContactController extends Controller
     {
         $request->validate([
             'status' => 'required|in:new,read,replied',
-            'notes' => 'nullable|string|max:1000',
+            'notes'  => 'nullable|string|max:1000',
+        ],[
+            'status.required' => 'Vui nhập trang thái',
+            'status.in'       => 'Trang thái khóng hợp lệ',
         ]);
 
         $contact->update([
             'status' => $request->status,
-            'notes' => $request->notes,
+            'notes'  => $request->notes,
         ]);
 
         return redirect()->route('admin.contacts.index')->with('success', 'Contact updated successfully!');

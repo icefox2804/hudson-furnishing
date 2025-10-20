@@ -157,6 +157,9 @@
                         <a href="{{ route('admin.users.index') }}" class="btn btn-primary">
                             <i class="fas fa-user me-2"></i>Quản Lý User
                         </a>
+                        <a href="{{ route('admin.chat.index') }}" class="btn btn-secondary">
+                            <i class="fa-regular fa-comments"></i> Quản Lý Chat
+                        </a>
                     @endif
                 </div>
             </div>

@@ -23,13 +23,13 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required|email',
+            'email'    => 'required|email',
             'password' => 'required|string|min:8',
         ], [
-            'email.required' => 'Vui lòng nhập email của bạn.',
-            'email.email' => 'Địa chỉ email không hợp lệ.',
+            'email.required'    => 'Vui lòng nhập email của bạn.',
+            'email.email'       => 'Địa chỉ email không hợp lệ.',
             'password.required' => 'Vui lòng nhập mật khẩu.',
-            'password.min' => 'Mật khẩu phải có ít nhất 8 ký tự.',
+            'password.min'      => 'Mật khẩu phải có ít nhất 8 ký tự.',
         ]);
 
         if (Auth::attempt($request->only('email', 'password'), $request->boolean('remember'))) {

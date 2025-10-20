@@ -496,3 +496,28 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
+// livechatadmin.js
+const socket = new WebSocket("ws://localhost:8080");
+
+socket.onopen = () => {
+    socket.send(JSON.stringify({ type: "init", role: "admin" }));
+};
+
+socket.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    if (data.type === "message") {
+        // hiển thị tin nhắn của từng khách (theo session_id)
+        console.log(`[${data.session_id}] ${data.from}: ${data.message}`);
+    }
+};
+
+function sendToUser(sessionId, msg) {
+    socket.send(
+        JSON.stringify({
+            type: "message",
+            role: "admin",
+            session_id: sessionId,
+            message: msg,
+        })
+    );
+}

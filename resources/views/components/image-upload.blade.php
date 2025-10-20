@@ -54,9 +54,7 @@
                             <img src="{{ is_string($image) ? asset('storage/' . $image) : $image->url }}" 
                                 alt="{{ is_string($image) ? 'Logo' : ($image->alt_text ?? 'Product Image') }}"
                                 class="img-fluid rounded border"
-                                style="width: 100%; height: 120px; object-fit: cover;">
-
-                            
+                                style="width: 100%; height: 120px; object-fit: cover;">                            
                             @if($deleteRoute)
                                 <button type="button" 
                                         class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1"

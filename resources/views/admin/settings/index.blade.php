@@ -450,6 +450,45 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <hr class="my-4">
+
+                                        <div class="settings-section">
+                                            <div class="section-header mb-3">
+                                                <h6 class="text-primary mb-1">
+                                                    <i class="fas fa-comment-alt me-2"></i>Floating Chat
+                                                </h6>
+                                                <small class="text-muted">Cấu hình các nút chat nổi</small>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="chat_zalo_url" class="form-label">
+                                                        <i class="fab fa-zalo text-primary me-1"></i>Zalo
+                                                    </label>
+                                                    <input type="url" class="form-control" id="chat_zalo_url" name="chat_zalo_url" 
+                                                        value="{{ $settings['chat_zalo_url'] ?? '' }}" 
+                                                        placeholder="https://zalo.me/0909123456">
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="chat_messenger_url" class="form-label">
+                                                        <i class="fab fa-facebook-messenger text-primary me-1"></i>Messenger
+                                                    </label>
+                                                    <input type="url" class="form-control" id="chat_messenger_url" name="chat_messenger_url" 
+                                                        value="{{ $settings['chat_messenger_url'] ?? '' }}" 
+                                                        placeholder="https://m.me/username">
+                                                </div>
+
+                                                <div class="col-md-6 mb-3">
+                                                    <label for="chat_phone_number" class="form-label">
+                                                        <i class="fas fa-phone text-primary me-1"></i>Gọi điện
+                                                    </label>
+                                                    <input type="text" class="form-control" id="chat_phone_number" name="chat_phone_number" 
+                                                        value="{{ $settings['chat_phone_number'] ?? '' }}" 
+                                                        placeholder="0909123456">
+                                                </div>                                            
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 
@@ -642,7 +681,6 @@
                             <i class="fas fa-save me-2"></i>Lưu Thay Đổi
                         </button>
                     </div>
-
                 </form>
             </div>
         </div>

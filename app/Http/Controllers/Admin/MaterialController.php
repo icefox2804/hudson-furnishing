@@ -58,15 +58,15 @@ class MaterialController extends Controller
     {
         
         $request->validate([
-            'name' => 'required|string|max:255|unique:materials',
+            'name'        => 'required|string|max:255|unique:materials',
             'description' => 'nullable|string|max:1000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'Tên vật liệu không được để trống.',
-            'name.unique' => 'Tên vật liệu đã tồn tại. Vui lòng chọn tên khác.',
-            'image.image' => 'Tệp tải lên phải là một hình ảnh hợp lệ.',
-            'image.mimes' => 'Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận: jpeg, png, jpg, gif.',
-            'image.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+            'name.unique'   => 'Tên vật liệu đã tồn tại. Vui lòng chọn tên khác.',
+            'image.image'   => 'Tệp tải lên phải là một hình ảnh hợp lệ.',
+            'image.mimes'   => 'Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận: jpeg, png, jpg, gif.',
+            'image.max'     => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
         $imagePath = null;
@@ -100,15 +100,15 @@ class MaterialController extends Controller
     public function update(Request $request, Material $material)
     {
         $request->validate([
-            'name' => 'required|string|max:255|unique:materials,name,' . $material->id,
+            'name'        => 'required|string|max:255|unique:materials,name,' . $material->id,
             'description' => 'nullable|string|max:1000',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image'       => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ], [
             'name.required' => 'Tên vật liệu không được để trống.',
-            'name.unique' => 'Tên vật liệu đã tồn tại. Vui lòng chọn tên khác.',
-            'image.image' => 'Tệp tải lên phải là một hình ảnh hợp lệ.',
-            'image.mimes' => 'Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận: jpeg, png, jpg, gif.',
-            'image.max' => 'Kích thước hình ảnh không được vượt quá 2MB.',
+            'name.unique'   => 'Tên vật liệu đã tồn tại. Vui lòng chọn tên khác.',
+            'image.image'   => 'Tệp tải lên phải là một hình ảnh hợp lệ.',
+            'image.mimes'   => 'Định dạng hình ảnh không hợp lệ. Chỉ chấp nhận: jpeg, png, jpg, gif.',
+            'image.max'     => 'Kích thước hình ảnh không được vượt quá 2MB.',
         ]);
 
         $data = $request->only(['name', 'description']);
