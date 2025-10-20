@@ -57,6 +57,12 @@
                             </a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link text-white {{ request()->routeIs('admin.sections.*') ? 'active' : '' }}" 
+                               href="{{ route('admin.sections.index') }}">
+                                <i class="fas fa-images me-2"></i>Không Gian
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.categories.*') ? 'active' : '' }}" 
                                href="{{ route('admin.categories.index') }}">
                                 <i class="fas fa-tags me-2"></i>Danh Mục
@@ -86,12 +92,7 @@
                                 <i class="fas fa-star me-2"></i>Đánh Giá
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white {{ request()->routeIs('admin.gallery.*') ? 'active' : '' }}" 
-                               href="{{ route('admin.gallery.index') }}">
-                                <i class="fas fa-images me-2"></i>Thư Viện
-                            </a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link text-white {{ request()->routeIs('admin.contacts.*') ? 'active' : '' }}" 
                                href="{{ route('admin.contacts.index') }}">

@@ -354,6 +354,7 @@
                                         </div>
 
                                         <div class="form-check mb-3">
+                                            <input type="hidden" name="hero_button_enabled" value="0">
                                             <input class="form-check-input" type="checkbox" name="hero_button_enabled" id="hero_button_enabled"
                                                 value="1" {{ !empty($siteSettings['hero_button_enabled']) ? 'checked' : '' }}>
                                             <label class="form-check-label" for="hero_button_enabled">

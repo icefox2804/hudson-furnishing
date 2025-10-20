@@ -98,7 +98,7 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->route('admin.categories.index')
-            ->with('success', 'Category created successfully.');
+            ->with('success', 'Đã Tạo Danh Mục Thành Công.');
     }
 
     /**
@@ -128,7 +128,7 @@ class CategoryController extends Controller
         ]);
 
         return redirect()->route('admin.categories.index')
-            ->with('success', 'Category updated successfully.');
+            ->with('success', 'Đã cập nhật Danh Mục Thành Công.');
     }
 
     /**
@@ -139,6 +139,6 @@ class CategoryController extends Controller
         $category->delete();
 
         return redirect()->route('admin.categories.index')
-            ->with('success', 'Category deleted successfully.');
+            ->with('success', 'Đã xóa Danh Mục.');
     }
 }

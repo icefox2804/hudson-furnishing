@@ -21,6 +21,7 @@ use App\Http\Controllers\Admin\OfferController as AdminOfferController;
 use App\Http\Controllers\Admin\ReviewController as AdminReviewController;
 use App\Http\Controllers\Admin\GalleryController as AdminGalleryController;
 use App\Http\Controllers\Admin\ContactController as AdminContactController;
+use App\Http\Controllers\Admin\SectionController as AdminSectionController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\ProfileController;
@@ -36,6 +37,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\Admin\ChatController;
 
 
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -46,6 +48,7 @@ use App\Http\Controllers\Admin\ChatController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
 
 // Public Routes
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -149,6 +152,17 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
         
     ]);
 
+    // Space management
+    Route::resource('sections', AdminSectionController::class)->names([
+        'index'   => 'admin.sections.index',
+        'create'  => 'admin.sections.create',
+        'store'   => 'admin.sections.store',
+        'show'    => 'admin.sections.show',
+        'edit'    => 'admin.sections.edit',
+        'update'  => 'admin.sections.update',
+        'destroy' => 'admin.sections.destroy'
+    ]);
+
     Route::post('products/bulk-delete', [AdminProductController::class, 'bulkDelete'])
         ->name('admin.products.bulk-delete');
     Route::post('products/{product}/images', [AdminProductController::class, 'uploadImages'])->name('admin.products.images');
@@ -156,46 +170,46 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->group(function () {
     
     // Categories Management
     Route::resource('categories', AdminCategoryController::class)->names([
-        'index' => 'admin.categories.index',
-        'create' => 'admin.categories.create',
-        'store' => 'admin.categories.store',
-        'show' => 'admin.categories.show',
-        'edit' => 'admin.categories.edit',
-        'update' => 'admin.categories.update',
-        'destroy' => 'admin.categories.destroy'
+        'index'     => 'admin.categories.index',
+        'create'    => 'admin.categories.create',
+        'store'     => 'admin.categories.store',
+        'show'      => 'admin.categories.show',
+        'edit'      => 'admin.categories.edit',
+        'update'    => 'admin.categories.update',
+        'destroy'   => 'admin.categories.destroy'
     ]);
     
     // Brands Management
     Route::resource('brands', AdminBrandController::class)->names([
-        'index' => 'admin.brands.index',
-        'create' => 'admin.brands.create',
-        'store' => 'admin.brands.store',
-        'show' => 'admin.brands.show',
-        'edit' => 'admin.brands.edit',
-        'update' => 'admin.brands.update',
-        'destroy' => 'admin.brands.destroy'
+        'index'     => 'admin.brands.index',
+        'create'    => 'admin.brands.create',
+        'store'     => 'admin.brands.store',
+        'show'      => 'admin.brands.show',
+        'edit'      => 'admin.brands.edit',
+        'update'    => 'admin.brands.update',
+        'destroy'   => 'admin.brands.destroy'
     ]);
     
     // Materials Management
     Route::resource('materials', AdminMaterialController::class)->names([
-        'index' => 'admin.materials.index',
-        'create' => 'admin.materials.create',
-        'store' => 'admin.materials.store',
-        'show' => 'admin.materials.show',
-        'edit' => 'admin.materials.edit',
-        'update' => 'admin.materials.update',
-        'destroy' => 'admin.materials.destroy'
+        'index'     => 'admin.materials.index',
+        'create'    => 'admin.materials.create',
+        'store'     => 'admin.materials.store',
+        'show'      => 'admin.materials.show',
+        'edit'      => 'admin.materials.edit',
+        'update'    => 'admin.materials.update',
+        'destroy'   => 'admin.materials.destroy'
     ]);
     
     // Offers Management
     Route::resource('offers', AdminOfferController::class)->names([
-        'index' => 'admin.offers.index',
-        'create' => 'admin.offers.create',
-        'store' => 'admin.offers.store',
-        'show' => 'admin.offers.show',
-        'edit' => 'admin.offers.edit',
-        'update' => 'admin.offers.update',
-        'destroy' => 'admin.offers.destroy'
+        'index'     => 'admin.offers.index',
+        'create'    => 'admin.offers.create',
+        'store'     => 'admin.offers.store',
+        'show'      => 'admin.offers.show',
+        'edit'      => 'admin.offers.edit',
+        'update'    => 'admin.offers.update',
+        'destroy'   => 'admin.offers.destroy'
     ]);
     
     // Reviews Management
